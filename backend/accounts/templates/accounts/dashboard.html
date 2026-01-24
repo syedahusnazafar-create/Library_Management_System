@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .card {
+            display: inline-block;
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            width: 220px;
+            text-align: center;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            border: 1px solid black;
+            text-decoration: none;
+            color: black;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Library Management System - Dashboard</h2>
+
+<!-- COUNTS -->
+<div class="card">
+    Total Books <br>
+    <b>{{ total_books }}</b>
+</div>
+
+<div class="card">
+    Available Books <br>
+    <b>{{ available_books }}</b>
+</div>
+
+<div class="card">
+    Issued Books <br>
+    <b>{{ issued_books }}</b>
+</div>
+
+<div class="card">
+    Total Students <br>
+    <b>{{ total_students }}</b>
+</div>
+
+<hr>
+
+<!-- ACTION BUTTONS -->
+<a href="{% url 'add_book' %}" class="btn">Add Book</a>
+<a href="{% url 'add_subject' %}" class="btn">Add Subject</a>
+<a href="{% url 'issue_book' %}" class="btn">Issue Book</a>
+<a href="{% url 'return_book' %}" class="btn">Return Book</a>
+<a href="{% url 'add_student' %}" class="btn">Students</a>
+<a href="{% url 'subject_list' %}" class="btn">Subjects</a>
+<a href="{% url 'issue_list' %}" class="btn">Issued Records</a>
+<a href="{% url 'logout' %}" class="btn">Logout</a>
+
+
+
+<hr>
+
+<h3>📘 Issued Book Records</h3>
+
+<p>
+    To view detailed issued book records (Student, Book, Dates, Status),
+    click the <b>"Issued Records"</b> button above.
+</p>
+
+</body>
+</html>

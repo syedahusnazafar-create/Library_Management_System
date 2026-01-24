@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Book</title>
+</head>
+<body>
+
+<h2>Add New Book</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <p style="color:green;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- ✅ FIXED: title → book_name -->
+    <label>Book Name:</label><br>
+    <input type="text" name="book_name" required><br><br>
+
+    <!-- ✅ FIXED: author → author_name -->
+    <label>Author Name:</label><br>
+    <input type="text" name="author_name" required><br><br>
+
+    <label>Subject:</label><br>
+    <select name="subject">
+        <option value="">Select Subject</option>
+        {% for subject in subjects %}
+            <option value="{{ subject.id }}">{{ subject.name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Quantity:</label><br>
+    <input type="number" name="quantity" min="1" required><br><br>
+
+    <!-- OPTIONAL: New Subject -->
+    <label>Add New Subject (optional):</label><br>
+    <input type="text" name="new_subject"><br><br>
+
+    <button type="submit">Add Book</button>
+</form>
+
+<br>
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ subject.name }} Books</title>
+</head>
+<body>
+
+<h2>Books for Subject: {{ subject.name }}</h2>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Total Quantity</th>
+        <th>Available</th>
+    </tr>
+
+    {% for book in books %}
+    <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.total_quantity }}</td>
+        <td>{{ book.available_quantity }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="4">No books found for this subject</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="{% url 'subject_list' %}">Back to Subjects</a>
+
+</body>
+</html>

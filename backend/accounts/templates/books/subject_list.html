@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Subjects</title>
+</head>
+<body>
+
+<h2>Subjects</h2>
+
+<ul>
+    {% for subject in subjects %}
+        <li>
+            <a href="{% url 'subject_books' subject.id %}">
+                {{ subject.name }}
+            </a>
+        </li>
+    {% empty %}
+        <li>No subjects available</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+</body>
+</html>

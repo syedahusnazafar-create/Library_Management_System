@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+        }
+        .card {
+            display: inline-block;
+            width: 200px;
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #333;
+            text-align: center;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 5px;
+            border: 1px solid black;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: #eee;
+        }
+        .late {
+            color: red;
+            font-weight: bold;
+        }
+        .due {
+            color: orange;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h2>📚 Library Management System - Dashboard</h2>
+
+<!-- COUNTS -->
+<div class="card">
+    Total Books<br>
+    <b>{{ total_books }}</b>
+</div>
+
+<div class="card">
+    Available Books<br>
+    <b>{{ available_books }}</b>
+</div>
+
+<div class="card">
+    Issued Books<br>
+    <b>{{ issued_books }}</b>
+</div>
+
+<div class="card">
+    Total Students<br>
+    <b>{{ total_students }}</b>
+</div>
+
+<div class="card late">
+    Late Returns<br>
+    <b>{{ late_books }}</b>
+</div>
+
+<div class="card due">
+    Due Today<br>
+    <b>{{ due_today }}</b>
+</div>
+
+<hr>
+
+<!-- ACTION BUTTONS -->
+<a href="{% url 'add_book' %}" class="btn">➕ Add Book</a>
+<a href="{% url 'add_subject' %}" class="btn">📘 Add Subject</a>
+<a href="{% url 'issue_book' %}" class="btn">📤 Issue Book</a>
+<a href="{% url 'return_book' %}" class="btn">📥 Return Book</a>
+<a href="{% url 'students' %}" class="btn">👨‍🎓 Students</a>
+<a href="{% url 'subject_list' %}" class="btn">📚 Subjects</a>
+<a href="{% url 'logout' %}" class="btn">🚪 Logout</a>
+
+</body>
+</html>

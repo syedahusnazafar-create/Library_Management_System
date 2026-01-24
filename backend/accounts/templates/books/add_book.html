@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Book</title>
+</head>
+<body>
+
+<h2>Add New Book</h2>
+
+<!-- ✅ Django Messages (ONLY ONCE – clean output) -->
+{% if messages %}
+    {% for message in messages %}
+        <p
+          {% if message.tags == 'success' %}
+              style="color:green;"
+          {% elif message.tags == 'warning' %}
+              style="color:orange;"
+          {% else %}
+              style="color:red;"
+          {% endif %}
+        >
+            {{ message }}
+        </p>
+    {% endfor %}
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Book Name</label><br>
+    <input type="text" name="book_name" required placeholder="Enter book title"><br><br>
+
+    <label>Author Name</label><br>
+    <input type="text" name="author_name" required><br><br>
+
+    <label>Quantity</label><br>
+    <input type="number" name="quantity" min="1" required><br><br>
+
+    <label>Select Subject</label><br>
+    <select name="subject">
+        <option value="">-- Select Subject --</option>
+        {% for subject in subjects %}
+            <option value="{{ subject.id }}">{{ subject.name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <p><b>OR</b></p>
+
+    <label>Add New Subject</label><br>
+    <input type="text" name="new_subject" placeholder="Enter new subject"><br><br>
+
+    <button type="submit">Add Book</button>
+</form>
+
+<br>
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+</body>
+</html>

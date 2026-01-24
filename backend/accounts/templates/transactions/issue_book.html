@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Issue Book</title>
+
+    <script>
+        function calculateReturnDate() {
+            let days = document.getElementById("return_days").value;
+            let issueDate = new Date("{{ today }}");
+
+            if (days) {
+                issueDate.setDate(issueDate.getDate() + parseInt(days));
+                document.getElementById("return_date").value =
+                    issueDate.toISOString().split('T')[0];
+            } else {
+                document.getElementById("return_date").value = "";
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<h2>Issue Book</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <p style="color:red;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Select Student</label><br>
+    <select name="student" required>
+        <option value="">-- Select Student --</option>
+        {% for student in students %}
+            <option value="{{ student.id }}">{{ student.name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <label>Select Book</label><br>
+    <select name="book" required>
+        <option value="">-- Select Book --</option>
+        {% for book in books %}
+            <option value="{{ book.id }}">
+                {{ book.title }} ({{ book.available_quantity }})
+            </option>
+        {% endfor %}
+    </select><br><br>
+
+    <!-- 🔹 RETURN DAYS INPUT -->
+
+    <label>Return Days</label><br>
+    <input type="number"
+           id="return_days"
+           name="return_days"
+           min="1"
+           required
+           oninput="calculateReturnDate()"><br><br>
+
+    <!-- 🔹 AUTO DISPLAY RETURN DATE -->
+
+    <label>Return Date</label><br>
+    <input type="date" id="return_date" readonly><br><br>
+
+    <button type="submit">Issue Book</button>
+</form>
+
+<br>
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Issued Books List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        .late {
+            color: red;
+            font-weight: bold;
+        }
+        .due {
+            color: orange;
+            font-weight: bold;
+        }
+        .ontime {
+            color: green;
+            font-weight: bold;
+        }
+        .btn {
+            padding: 5px 10px;
+            border: 1px solid black;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>📚 Issued Books</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <p style="color:green;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+
+<table>
+    <tr>
+        <th>Student</th>
+        <th>Book</th>
+        <th>Issue Date</th>
+        <th>Return Date</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for record in issued_list %}
+    <tr>
+        <td>{{ record.student.name }}</td>
+        <td>{{ record.book.title }}</td>
+        <td>{{ record.issue_date }}</td>
+        <td>{{ record.return_date }}</td>
+
+        <td>
+            {% if record.status == "Late" %}
+                <span class="late">Late</span>
+            {% elif record.status == "Due Today" %}
+                <span class="due">Due Today</span>
+            {% else %}
+                <span class="ontime">On Time</span>
+            {% endif %}
+        </td>
+
+        <td>
+            {% if not record.returned %}
+                <form method="POST" action="{% url 'return_book' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="issue_id" value="{{ record.id }}">
+                    <button type="submit" class="btn">Return</button>
+                </form>
+            {% else %}
+                Returned
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="6">No issued books found</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="{% url 'dashboard' %}">⬅ Back to Dashboard</a>
+
+</body>
+</html>
