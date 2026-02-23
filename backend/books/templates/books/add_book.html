@@ -1,49 +1,150 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Book</title>
+    <title>Add Book | Library LMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            width: 450px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4e73df;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 5px rgba(78,115,223,0.4);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #4e73df;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #2e59d9;
+        }
+
+        .message {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #4e73df;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Add New Book</h2>
+<div class="card">
+    <h2>Add New Book</h2>
 
-{% if messages %}
-    {% for message in messages %}
-        <p style="color:green;">{{ message }}</p>
-    {% endfor %}
-{% endif %}
-
-<form method="POST">
-    {% csrf_token %}
-
-    <!-- ✅ FIXED: title → book_name -->
-    <label>Book Name:</label><br>
-    <input type="text" name="book_name" required><br><br>
-
-    <!-- ✅ FIXED: author → author_name -->
-    <label>Author Name:</label><br>
-    <input type="text" name="author_name" required><br><br>
-
-    <label>Subject:</label><br>
-    <select name="subject">
-        <option value="">Select Subject</option>
-        {% for subject in subjects %}
-            <option value="{{ subject.id }}">{{ subject.name }}</option>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
         {% endfor %}
-    </select><br><br>
+    {% endif %}
 
-    <label>Quantity:</label><br>
-    <input type="number" name="quantity" min="1" required><br><br>
+    <form method="POST">
+        {% csrf_token %}
 
-    <!-- OPTIONAL: New Subject -->
-    <label>Add New Subject (optional):</label><br>
-    <input type="text" name="new_subject"><br><br>
+        <label>Book Name</label>
+        <input type="text" name="book_name" placeholder="Enter Book Name" required>
 
-    <button type="submit">Add Book</button>
-</form>
+        <label>Author Name</label>
+        <input type="text" name="author_name" placeholder="Enter Author Name" required>
 
-<br>
-<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+        <label>Subject</label>
+        <select name="subject">
+            <option value="">Select Subject</option>
+            {% for subject in subjects %}
+                <option value="{{ subject.id }}">{{ subject.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Quantity</label>
+        <input type="number" name="quantity" min="1" placeholder="Enter Quantity" required>
+
+        <label>Add New Subject (Optional)</label>
+        <input type="text" name="new_subject" placeholder="Enter New Subject">
+
+        <button type="submit" class="btn">Add Book</button>
+    </form>
+
+    <a href="{% url 'dashboard' %}" class="back-link">← Back to Dashboard</a>
+
+</div>
 
 </body>
 </html>

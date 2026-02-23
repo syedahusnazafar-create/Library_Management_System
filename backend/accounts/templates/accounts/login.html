@@ -1,26 +1,173 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Library Management System - Login</h2>
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        background: #f4f6fb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        width: 400px;
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .icon-box {
+        width: 70px;
+        height: 70px;
+        background: #1f2c44;
+        border-radius: 20px;
+        margin: 0 auto 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        color: white;
+    }
+
+    h2 {
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        color: gray;
+        margin-bottom: 25px;
+        font-size: 14px;
+    }
+
+    .toggle {
+        display: flex;
+        background: #f0f0f5;
+        border-radius: 12px;
+        margin-bottom: 30px;
+    }
+
+    .toggle div {
+        flex: 1;
+        padding: 10px;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+
+    .active {
+        background: white;
+        font-weight: 600;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    }
+
+    .input-group {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .input-group label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .input-box {
+        position: relative;
+    }
+
+    .input-box input {
+        width: 100%;
+        padding: 12px 15px;
+        padding-left: 40px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        outline: none;
+        font-size: 14px;
+    }
+
+    .input-box span {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: gray;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 14px;
+        background: #1f2c44;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        background: #0f1b2d;
+    }
+
+    .error {
+        color: red;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+</style>
+
+<div class="card">
+
+    <div class="icon-box">
+        📚
+    </div>
+
+    <h2>Library Management</h2>
+    <p class="subtitle"></p>
+
+    <div class="toggle">
+        <div class="active">Login</div>
+        <div>Sign Up</div>
+    </div>
 
     {% if messages %}
         {% for message in messages %}
-            <p style="color:red;">{{ message }}</p>
+            <div class="error">{{ message }}</div>
         {% endfor %}
     {% endif %}
 
     <form method="POST">
         {% csrf_token %}
-        <label>Username:</label><br>
-        <input type="text" name="username" required><br><br>
 
-        <label>Password:</label><br>
-        <input type="password" name="password" required><br><br>
+        <div class="input-group">
+            <label>Email</label>
+            <div class="input-box">
+                <span>✉️</span>
+                <input type="text" name="username" placeholder="aapka@email.com" required>
+            </div>
+        </div>
 
-        <button type="submit">Login</button>
+        <div class="input-group">
+            <label>Password</label>
+            <div class="input-box">
+                <span>🔒</span>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">Login</button>
     </form>
-</body>
-</html>
+
+</div>
+{% endblock %}
